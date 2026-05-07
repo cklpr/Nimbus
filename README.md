@@ -115,9 +115,3 @@ Advantages:
 - Free to use
 - No API key required
 - Fast and reliable
-
----
-
-# Nimbus
-
-> Stay prepared. Stay ahead. Stay with Nimbus.
