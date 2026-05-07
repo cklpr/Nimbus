@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nimbus | Soar through the skies</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="theme-default">
+    <div class="bg-layer base-gradient"></div>
+    <div class="bg-layer dynamic-gradient"></div>
+    <div class="bg-layer noise-overlay"></div>
+
+    <div id="loader" class="loader-overlay">
+        <div class="loader-ring"></div>
+        <p>Calibrating Atmospheric Sensors...</p>
+    </div>
+
+    <nav class="top-nav glass-panel slide-down">
+        <div class="nav-left">
+            <h1 class="logo">N I M B U S</h1>
+        </div>
+        <div class="nav-center">
+            <div class="search-bar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="searchInput" placeholder="Search city...">
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span id="navLocationText">Detecting...</span>
+            </div>
+            <button id="locationBtn" class="nav-btn" title="Current Location">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="dashboard-grid hidden" id="app">
+        <div class="left-column">
+            <section class="card current-weather-card glass-panel fade-in">
+                <div class="current-header">
+                    <div>
+                        <h2 id="locationName" class="location-title">NIMBUS</h2>
+                        <p id="cityName" class="location-subtitle">New Delhi, India</p>
+                    </div>
+                    <p id="currentDateTime" class="sub-text">Today, 17 May 2026 • 12:38 PM</p>
+                </div>
+
+                <div class="current-main">
+                    <div class="temp-block">
+                        <span id="currentTemp" class="huge-temp">37</span><span class="degree-symbol">°c</span>
+                    </div>
+                    <div id="currentIconLarge" class="weather-icon-large"></div>
+                </div>
+
+                <h3 id="weatherDesc" class="weather-condition-text">Clear Sky</h3>
+
+                <div class="current-footer">
+                    <div class="mini-metric">
+                        <span id="highTemp">38°</span>
+                        <span class="sub-text">High</span>
+                    </div>
+                    <div class="mini-metric">
+                        <span id="lowTemp">26°</span>
+                        <span class="sub-text">Low</span>
+                    </div>
+                    <div class="mini-metric feels-like">
+                        <span class="sub-text">Feels like</span>
+                        <span id="feelsLike">38°</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card glass-panel fade-in delay-1">
+                <div class="card-header">
+                    <h3 class="card-title">7-Day Outlook</h3>
+                </div>
+                <div id="dailyContainer" class="daily-list"></div>
+            </section>
+        </div>
+
+        <div class="center-column">
+            <section class="card glass-panel fade-in delay-2">
+                <div class="card-header">
+                    <h3 class="card-title">Outfit Recommendation</h3>
+                </div>
+                <div class="outfit-hero">
+                    <div id="outfitMainIcon" class="outfit-graphic"></div>
+                    <p id="outfitMainText" class="outfit-desc">Light, breathable clothing perfect for the warm weather.</p>
+                </div>
+                <ul id="outfitList" class="outfit-tips"></ul>
+            </section>
+
+            <section class="card glass-panel fade-in delay-3">
+                <div class="card-header">
+                    <h3 class="card-title">Weather Details</h3>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item glass-inner">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                        <div class="detail-info">
+                            <span class="sub-text">Humidity</span>
+                            <span id="detailHumidity" class="detail-val">--%</span>
+                        </div>
+                    </div>
+                    <div class="detail-item glass-inner">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2"></path></svg>
+                        <div class="detail-info">
+                            <span class="sub-text">Wind</span>
+                            <span id="detailWind" class="detail-val">-- km/h</span>
+                        </div>
+                    </div>
+                    <div class="detail-item glass-inner">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <div class="detail-info">
+                            <span class="sub-text">Pressure</span>
+                            <span id="detailPressure" class="detail-val">-- hPa</span>
+                        </div>
+                    </div>
+                    <div class="detail-item glass-inner">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+                        <div class="detail-info">
+                            <span class="sub-text">UV Index</span>
+                            <span id="detailUV" class="detail-val">--</span>
+                        </div>
+                    </div>
+                    <div class="detail-item glass-inner">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <div class="detail-info">
+                            <span class="sub-text">Visibility</span>
+                            <span id="detailVisibility" class="detail-val">-- km</span>
+                        </div>
+                    </div>
+                    <div class="detail-item glass-inner">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+                        <div class="detail-info">
+                            <span class="sub-text">Cloud Cover</span>
+                            <span id="detailClouds" class="detail-val">--%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="right-column">
+            <section class="card glass-panel fade-in delay-4">
+                <div class="card-header">
+                    <h3 class="card-title">Hourly Forecast</h3>
+                    <span class="sub-text">Next 24 Hours</span>
+                </div>
+                <div class="hourly-scroll" id="hourlyContainer"></div>
+            </section>
+
+            <section class="card glass-panel fade-in delay-5">
+                <div class="card-header">
+                    <h3 class="card-title">Sun Times</h3>
+                </div>
+                <div class="sun-times-container">
+                    <div class="sun-item">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2"><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path><path d="M12 8a4 4 0 0 1 4 4H8a4 4 0 0 1 4-4z"></path><line x1="2" y1="16" x2="22" y2="16"></line></svg>
+                        <div class="sun-text">
+                            <span class="sub-text">Sunrise</span>
+                            <span id="sunriseTime" class="sun-val">--:-- AM</span>
+                        </div>
+                    </div>
+                    <div class="sun-divider"></div>
+                    <div class="sun-item">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path><path d="M12 16a4 4 0 0 1-4-4h8a4 4 0 0 1-4 4z"></path><line x1="2" y1="8" x2="22" y2="8"></line></svg>
+                        <div class="sun-text">
+                            <span class="sub-text">Sunset</span>
+                            <span id="sunsetTime" class="sun-val">--:-- PM</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card controls-card glass-panel fade-in delay-6">
+                <button id="speakBtn" class="control-btn glass-inner">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                    <span>Voice Intelligence</span>
+                </button>
+                <button id="soundBtn" class="control-btn glass-inner">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                    <span id="soundText">Enable Ambience</span>
+                </button>
+            </section>
+        </div>
+    </main>
+
+    <footer class="dashboard-footer hidden" id="footer">
+        <p>Stay prepared. Stay ahead. Stay with <span style="color:var(--accent)">Nimbus.</span></p>
+        <p class="sub-text">Data by Open-Meteo</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
